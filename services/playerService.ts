@@ -4,21 +4,7 @@ import { DBConfig } from "../utils/dbConfig";
 export class PlayerService {
   constructor() {}
 
-  getPlayers_old = (): Promise<any> => {
-    const pgp = pgPromise();
-    const db = pgp(DBConfig.dbConfig);
-
-    const query = `SELECT p.player_id, t.team_name, p.player_name, pp.playerPosition_code
-    FROM Player p
-    JOIN Team t
-	    ON p.team_id = t.team_id
-    JOIN PlayerPosition pp
-	    ON p.playerPosition_id = pp.playerPosition_id`;
-
-    return db.query(query);
-  };
-
-  getPlayers = async () => {
+  getPlayers = async () : Promise<any> => {
     const pgp = pgPromise();
     const db = pgp(DBConfig.dbConfig);
 
@@ -33,8 +19,7 @@ export class PlayerService {
     JOIN PlayerPosition pp
 	    ON p.playerPosition_id = pp.playerPosition_id`;
 
-    const playerResponse = await db.query(playerQuery);
-    const retVal = await playerResponse;
+    const retVal = await db.query(playerQuery) as Promise<any>;
     return retVal;
   };
 }
