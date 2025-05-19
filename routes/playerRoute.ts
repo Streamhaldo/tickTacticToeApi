@@ -16,7 +16,18 @@ export class PlayerRoute extends BaseRoute {
     console.log("Get all players");
     // Logic to retrieve all users
     var playersService = new PlayerService();
-    const players = await playersService.getPlayers();
+    const players = await playersService.getPlayers().then((players) => {
+      return players.map((player : any) => {
+        return {
+          id: player.player_id,
+          name: player.player_name,
+          correctPosition: player.playerposition_code,
+          positionGuessedId: undefined,
+          poistionGuessed: undefined,
+        };
+      });
+    });
+
     res.json(players);
   }
 }
