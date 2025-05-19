@@ -8,6 +8,7 @@ export class PlayerRoute extends BaseRoute {
   }
 
   routes(): void {
+    //commented out for now
     this.router.get("/", this.getPlayers);
   }
 
